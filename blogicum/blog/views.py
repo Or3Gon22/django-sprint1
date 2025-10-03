@@ -2,28 +2,6 @@ from django.http import Http404
 from django.shortcuts import render
 
 
-def index(request):
-    """Render the main page with the list of posts."""
-    template_name = 'blog/index.html'
-    context = {'post': posts}
-    return render(request, template_name, context)
-
-
-def post_detail(request, id):
-    """Render a single post by its id or raise 404 if not found."""
-    template_name = 'blog/detail.html'
-    post = next((p for p in posts if p['id'] == id), None)
-    if post is None:
-        raise Http404('Пост не найден')
-    return render(request, template_name, {'post': post})
-
-
-def category_posts(request, category_slug):
-    """Render the category page showing only the category slug."""
-    template_name = 'blog/category.html'
-    return render(request, template_name, {'category_slug': category_slug})
-
-
 posts = [
     {
         'id': 0,
@@ -66,3 +44,28 @@ posts = [
                 укутывал их, чтобы не испортились от дождя.''',
     },
 ]
+
+
+posts_by_id = {p['id']: p for p in posts}
+
+
+def index(request):
+    """Render the main page with the list of posts."""
+    template_name = 'blog/index.html'
+    context = {'post': posts}
+    return render(request, template_name, context)
+
+
+def post_detail(request, id):
+    """Render a single post by its id or raise 404 if not found."""
+    template_name = 'blog/detail.html'
+    try:
+        post = posts_by_id[id]
+    except KeyError:
+        raise Http404('Пост не найден')
+    return render(request, template_name, {'post': post})
+
+
+def category_posts(request, category_slug):
+    template_name = 'blog/category.html'
+    return render(request, template_name, {'category_slug': category_slug})
