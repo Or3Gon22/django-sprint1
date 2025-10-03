@@ -52,7 +52,7 @@ posts_by_id = {p['id']: p for p in posts}
 def index(request):
     """Render the main page with the list of posts."""
     template_name = 'blog/index.html'
-    context = {'post': posts}
+    context = {'posts': posts}
     return render(request, template_name, context)
 
 
