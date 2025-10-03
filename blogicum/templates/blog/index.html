@@ -6,17 +6,6 @@
   <h1>Лента записей</h1>                 
   {% for post in posts|dictsortreversed:"id" %}
     <hr>
-    <article>
-      <ul>
-        <li>Место: {{ p.location }}</li>
-        <li>Дата: {{ p.date }}</li>
-        <li>
-          Категория:
-          <a href="{% url 'blog:category_posts' p.category %}">{{ p.category }}</a>
-        </li>
-      </ul>
-      <p>{{ p.text|truncatewords:10 }}</p>
-      <a href="{% url 'blog:post_detail' p.id %}">Читать полный текст</a>
-    </article>
+    {% include 'includes/article.html' %}
   {% endfor %}
 {% endblock %}
