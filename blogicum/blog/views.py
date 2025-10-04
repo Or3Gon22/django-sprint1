@@ -67,5 +67,6 @@ def post_detail(request, id):
 
 
 def category_posts(request, category_slug):
+    """Render the category page showing only the category slug."""
     template_name = 'blog/category.html'
     return render(request, template_name, {'category_slug': category_slug})
